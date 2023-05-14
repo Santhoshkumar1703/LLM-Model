@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chatbot Demo</title>
+</head>
+<body>
+    <h1>Chatbot Demo</h1>
+    <form action="/get-response" method="POST">
+        <input type="text" name="user_input">
+        <button type="submit">Send</button>
+    </form>
+    <div id="response"></div>
+    <script>
+        const form = document.querySelector('form');
+        const responseDiv = document.querySelector('#response');
+        form.addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const formData = new FormData(form);
+            const response = await fetch('/get-response', {
+                method: 'POST',
+                body: formData
+            });
+            const data = await response.json();
+            responseDiv.innerText = data.response;
+        });
+    </script>
+</body>
+</html>
